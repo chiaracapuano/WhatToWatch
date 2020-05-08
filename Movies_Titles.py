@@ -30,7 +30,7 @@ for i in movie_idx:
                 {
                     'Code': i,
                     'Title': title,
-                    'Netflix_Tag': genre,
+                    'Tags': genre,
 
                 }
             ]
