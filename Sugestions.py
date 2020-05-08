@@ -66,8 +66,12 @@ pd.set_option('display.width', None)
 pd.set_option('display.max_colwidth', None)
 
 joined = pd.merge(df_title,grouped, left_on='Code', right_on='Code')
-top_suggestions = joined.sort_values('Scores_tot', ascending=False).head(5)
+top_suggestions = joined.sort_values('Scores_tot', ascending=False)#.head(5)
 
+print("Here are the categories I found:", top_suggestions['Netflix_Tag'].unique())
+print()
+category = input("Which one would you want?\n")
+top_suggestions = top_suggestions[top_suggestions['Netflix_Tag'] == category]
 print(top_suggestions[['Title','Code','Netflix_Tag']].to_string(index=False, header= False))
 #output = top_suggestions[['Job','Podcast_Title_x','Episode_Title']]
 #print(output)
