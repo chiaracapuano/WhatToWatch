@@ -4,15 +4,19 @@ import warnings
 warnings.filterwarnings("ignore")
 from cachetools import cached
 
-nlp = spacy.load("en_core_web_lg")
 
 import pandas as pd
+df_title = pd.read_csv(r'.\Movie_Titles.csv', encoding="utf-8")
+new = df_title["Title"].str.split(',"description"', n = 1, expand = True)
+df_title["Title"]= new[0]
+
+nlp = spacy.load("en_core_web_lg")
 
 ##Import episodes+labels in dataframe
 df = pd.read_csv(r'.\Netflix_Movies_Multiple_Tags.csv', encoding="utf-8")
 df.drop_duplicates(inplace=True)
 
-#input job/personality
+#input 
 word = input("Please enter a word: \n")
 
 count = 0
@@ -55,17 +59,17 @@ def calculate_weigths(df):
 
 df = calculate_weigths(df)
 grouped = df.groupby(['Code']).mean().reset_index()
+
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 pd.set_option('display.max_colwidth', None)
-#df_title = pd.read_csv(r'C:\Users\adach\PycharmProjects\Podcasts_Scraping\Podcast_list_assignment_titles.csv', encoding="utf-8")
-#joined = pd.merge(df,grouped, left_on='Code', right_on='Podcast_Title')
-top_3_suggestions = grouped.sort_values('Scores_tot', ascending=False).head(5)
 
-print(top_3_suggestions[['Code']].to_string(index=False, header= False))
-#top_3_suggestions['Job'] = word
-#output = top_3_suggestions[['Job','Podcast_Title_x','Episode_Title']]
+joined = pd.merge(df_title,grouped, left_on='Code', right_on='Code')
+top_suggestions = joined.sort_values('Scores_tot', ascending=False).head(5)
+
+print(top_suggestions[['Title','Code','Netflix_Tag']].to_string(index=False, header= False))
+#output = top_suggestions[['Job','Podcast_Title_x','Episode_Title']]
 #print(output)
 #output.to_csv(r'C:\Users\adach\PycharmProjects\Podcasts_Scraping\Output.csv', index = False, mode='a', header =False)
 
