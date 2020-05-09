@@ -45,6 +45,8 @@ import swifter
 def calculate_weigths(df):
     for i in range(1, count+1):
         df['Scores_'+str(i)] = df.swifter.apply(lambda x: get_similarity(x['Answer_'+str(i)], x['Tags']), axis=1)
+        df['Scores_1'] = 2*df['Scores_1']
+
         df['Scores_NoSq_' + str(i)]=df['Scores_'+str(i)]
         df['Scores_' + str(i)] = df['Scores_' + str(i)].mul(df['Scores_' + str(i)] ).mul(df['Scores_' + str(i)] )
 
