@@ -47,11 +47,25 @@ for a in soup.find_all('a', {'class': "nm-collections-title nm-collections-link"
             temp = pd.DataFrame(
                 {
                     'Code': url,
-                    'Netflix_Tag': match,
                     'Tags': splitted
                 }
             )
 
             df = pd.concat([df, temp])
-df.to_csv(r'.\Netflix_Movies_Multiple_Tags.csv', index=False)
+
+    for elem in soup.findAll('span', {'class': 'more-details-item item-genres'}):
+        genre = elem.text.replace(',', '')
+
+
+
+        temp_dict = [
+                {
+                    'Code': url,
+                    'Tags': genre,
+
+                }
+            ]
+        temp = pd.DataFrame.from_records(temp_dict)
+        df = pd.concat([df, temp])
+df.to_csv(r'.\Netflix_Movies_All_Tags.csv', index=False)
 
