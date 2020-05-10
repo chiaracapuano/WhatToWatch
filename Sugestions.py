@@ -14,7 +14,7 @@ nlp = spacy.load("en_core_web_lg")
 
 ##Import episodes+labels in dataframe
 df = pd.read_csv(r'.\Netflix_Movies_All_Tags.csv', encoding="utf-8")
-df.drop_duplicates(inplace=True)
+#df.drop_duplicates(inplace=True)
 
 #input 
 word = input("Please enter a word: \n")
