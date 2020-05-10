@@ -6,14 +6,15 @@ from cachetools import cached
 
 
 import pandas as pd
-df_title = pd.read_csv(r'.\Movie_Titles.csv', encoding="utf-8")
+
+df_title = pd.read_csv(r'./Movie_Titles.csv', encoding="utf-8")
 new = df_title["Title"].str.split(',"description"', n = 1, expand = True)
 df_title["Title"]= new[0]
 
 nlp = spacy.load("en_core_web_lg")
 
 ##Import episodes+labels in dataframe
-df = pd.read_csv(r'.\Netflix_Movies_All_Tags.csv', encoding="utf-8")
+df = pd.read_csv(r'./Netflix_Movies_All_Tags.csv', encoding="utf-8")
 #df.drop_duplicates(inplace=True)
 
 #input 
@@ -46,7 +47,7 @@ def calculate_weigths(df):
     for i in range(1, count+1):
         df['Scores_'+str(i)] = df.swifter.apply(lambda x: get_similarity(x['Answer_'+str(i)], x['Tags']), axis=1)
         df['Scores_1'] = 2*df['Scores_1']
-
+        df['Scores_2'] = 1.5 * df['Scores_2']
         df['Scores_NoSq_' + str(i)]=df['Scores_'+str(i)]
         df['Scores_' + str(i)] = df['Scores_' + str(i)].mul(df['Scores_' + str(i)] ).mul(df['Scores_' + str(i)] )
 
