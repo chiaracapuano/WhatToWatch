@@ -1,6 +1,7 @@
 import bs4 as bs
 import urllib.request
 import requests
+import pickle
 r  =requests.get('https://www.netflix.com/title/81226439')
 txt = r.text
 import re
@@ -68,4 +69,14 @@ for a in soup.find_all('a', {'class': "nm-collections-title nm-collections-link"
         temp = pd.DataFrame.from_records(temp_dict)
         df = pd.concat([df, temp])
 df.to_csv(r'.\Netflix_Movies_All_Tags.csv', index=False)
+import spacy
+nlp = spacy.load("en_core_web_lg")
+doc_list = {}
+idx = 0
 
+for i in df.Tags:
+    idx = idx+1
+    doc_list[idx] = nlp(i)
+pfile = open("filename.pickle", 'wb')
+pickle.dump(doc_list, pfile, protocol=pickle.HIGHEST_PROTOCOL)
+pfile.close()
