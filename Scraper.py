@@ -6,6 +6,7 @@ r  =requests.get('https://www.netflix.com/title/81226439')
 txt = r.text
 import re
 from bs4 import BeautifulSoup
+
 soup = BeautifulSoup(txt, 'html.parser')
 pattern = '"genre":(.*),"image"'
 """
@@ -71,6 +72,7 @@ for a in soup.find_all('a', {'class': "nm-collections-title nm-collections-link"
 df.to_csv(r'.\Netflix_Movies_All_Tags.csv', index=False)
 import spacy
 nlp = spacy.load("en_core_web_lg")
+
 doc_list = {}
 idx = 0
 

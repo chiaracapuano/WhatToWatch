@@ -1,0 +1,8 @@
+bs4
+cachetools
+flask
+joblib
+requests
+spacy
+streamlit
+wheel

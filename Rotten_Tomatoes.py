@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+
 df_title = pd.read_csv(r'./Movie_Titles.csv', encoding="utf-8")
 
 new = df_title["Title"].str.split(',"description"', n=1, expand=True)
@@ -9,9 +10,12 @@ df_title["Title_to_merge"] = new[0]
 df_title["Title_to_merge"] = df_title["Title_to_merge"].astype(str).str.strip('"')
 df_title["Title_to_merge"] = df_title["Title_to_merge"].astype(str).str.replace(' ', '_')
 df_title["Title_to_merge"] = df_title["Title_to_merge"].astype(str).str.replace('-', '_')
+df_title["Title_to_merge"] = df_title["Title_to_merge"].astype(str).str.replace(':', '')
+
 df_title["Title_to_merge"] = df_title["Title_to_merge"].astype(str).str.replace('&', 'and')
 
 df_title["Title_to_merge"]  = df_title["Title_to_merge"].astype(str).str.lower()
+
 
 from unidecode import unidecode
 

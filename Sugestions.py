@@ -1,7 +1,5 @@
 import spacy
-import warnings
 
-warnings.filterwarnings("ignore")
 from cachetools import cached
 
 
@@ -42,7 +40,6 @@ def f_weights(row):
     return val
 
 ##Calculating similarity and weights
-import swifter
 def calculate_weigths(df):
     for i in range(1, count+1):
         df['Scores_'+str(i)] = df.swifter.apply(lambda x: get_similarity(x['Answer_'+str(i)], x['Tags']), axis=1)
