@@ -13,17 +13,9 @@ class Suggestions:
         self.db = file
         self.nlp = nlp
 
-
-
-
-
-
-
-
     def calculate_weigths(self):
-
-
-
+        """Compares movies tags with user input word.
+        Tags are contained in picked file given as class argument."""
 
         def f_weights(row):
             if row['Scores_tot'] >= 0.5:
@@ -47,7 +39,6 @@ class Suggestions:
             token_i = self.nlp(i)
 
             partial = []
-            #self.df['Scores_'+str(i)] = self.df.swifter.apply(lambda x: get_similarity(x['Answer_'+str(i)], x['Tags']), axis=1)
             for key in self.db:
                 partial.append(token_i.similarity(self.db[key]))
             self.df['Scores_' + str(count)] = partial
@@ -68,15 +59,11 @@ class Suggestions:
         return self.df
 
 
-    def get_titles(self):
-        new = self.df_title["Title"].str.split(',"description"', n=1, expand=True)
-        self.df_title["Title"] = new[0]
-        return self.df_title
 
 
     def display_results(self):
         df = self.calculate_weigths()
-        df_title = self.get_titles()
+        df_title = self.df_title
         grouped = df.groupby(['Code']).mean().reset_index()
         pd.set_option('display.max_rows', None)
         pd.set_option('display.max_columns', None)

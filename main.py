@@ -5,26 +5,67 @@ import spacy
 from flask import Flask, request
 import joblib
 import streamlit as st
+from sqlalchemy import create_engine
+engine = create_engine('postgresql+psycopg2://postgres:dasquee@localhost:5432/WhatToWatch')
 
-df = pd.read_csv(r'./Netflix_Movies_All_Tags.csv', encoding="utf-8")
-df_title = pd.read_csv(r'./Movie_Titles_Ratings.csv', encoding="utf-8")
+
+def dfs_update(update_dbs = False, write_to_csv = False):
+    if update_dbs == True:
+        from Scraper import Scraped_Tags
+        from Movies_Titles import Movie_Titles
+        from Rotten_Tomatoes import Ratings
+
+
+
+        updated_df = Scraped_Tags()
+        df = updated_df.scrape_and_tag()
+        df.to_sql('TAGS', engine, if_exists = 'replace')
+        print("TAGS have been updated")
+
+
+        pickled = updated_df.pickle_tags()
+
+
+        df = pd.read_sql_query('select * from "TAGS"', con=engine)
+        updated_titles = Movie_Titles(df)
+        df_titles = updated_titles.get_titles()
+        df_titles.to_sql('TITLES', engine, if_exists = 'replace')
+        print("TITLES have been updated")
+
+
+        ratings = Ratings(df_titles)
+        df_ratings = ratings.get_ratings()
+        df_ratings.to_sql('RATINGS', engine, if_exists = 'replace')
+        print("RATINGS have been updated")
+
+        if write_to_csv==True:
+            tags_df_loc = r'./Netflix_Movies_All_Tags.csv'
+            df.to_csv(tags_df_loc, index=False)
+            title_df_loc = r'./Movie_Titles.csv'
+            df_titles.to_csv(title_df_loc, index=False)
+            ratings_df_loc = r'./Movie_Titles_Ratings.csv'
+            df_ratings.to_csv(ratings_df_loc, index = False)
+    else:
+        print("DBs have not been updated")
+
+dfs_update(update_dbs = True)
+df = pd.read_sql_query('select * from "TAGS"',con=engine)
+df_ratings = pd.read_sql_query('select * from "RATINGS"',con=engine)
+
+
 
 app = Flask(__name__)
-
-
-
-#nlp = get_model()
 
 @app.route("/")
 def home():
     return """
     <html><head></head>
     <body>
-        <h1>Fuck you and the horse</h1>
-        <h3>you rode in on</h3>
+        <h1>Please enter a topic you'd like to watch a movie about/h1>
+        <h3>Movies obtained from https://www.netflix.com/browse/genre/34399</h3>
         <div>
             <form action="/api/suggest" method="get">
-                <label for="q">Query:</label><br>
+                <label for="q">Topic:</label><br>
                 <input type="text" id="q" name="q" value=""><br>
             </form>
         </div>
@@ -35,13 +76,10 @@ def home():
 @app.route("/api/suggest")
 def Suggest():
     q = request.args.get('q')
-   # load_model()
-    #rv = get_file()
 
 
-    suggestions = Suggestions(df, df_title, q, rv, nlp)
+    suggestions = Suggestions(df, df_ratings, q, rv, nlp)
     return suggestions.display_results()
-    #    output=model.predict(data)  #what you want to do with frozen model goes here"""
 
 
 if __name__ == "__main__":
@@ -65,6 +103,3 @@ if __name__ == "__main__":
 
 
     app.run(debug=True, host='0.0.0.0', threaded = True)
-
-
-
