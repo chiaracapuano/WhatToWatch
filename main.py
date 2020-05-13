@@ -48,7 +48,7 @@ def dfs_update(update_dbs = False, write_to_csv = False):
     else:
         print("DBs have not been updated")
 
-dfs_update(update_dbs = True)
+dfs_update()
 df = pd.read_sql_query('select * from "TAGS"',con=engine)
 df_ratings = pd.read_sql_query('select * from "RATINGS"',con=engine)
 
