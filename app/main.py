@@ -1,19 +1,18 @@
-from Suggestions import Suggestions
+from app.Suggestions import Suggestions
 import sys
 import pandas as pd
 import spacy
 from flask import Flask, request
 import joblib
-import streamlit as st
 from sqlalchemy import create_engine
 engine = create_engine('postgresql+psycopg2://postgres:dasquee@localhost:5432/WhatToWatch')
 
 
 def dfs_update(update_dbs = False, write_to_csv = False):
     if update_dbs == True:
-        from Scraper import Scraped_Tags
-        from Movies_Titles import Movie_Titles
-        from Rotten_Tomatoes import Ratings
+        from app.Scraper import Scraped_Tags
+        from app.Movies_Titles import Movie_Titles
+        from app.Rotten_Tomatoes import Ratings
 
         updated_df = Scraped_Tags()
         df = updated_df.scrape_and_tag()
@@ -89,4 +88,4 @@ if __name__ == "__main__":
            "please wait until server has fully started"))
 
 
-    app.run(debug=True, threaded = True)
+    app.run(debug=True, host='0.0.0.0', threaded = True)

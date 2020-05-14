@@ -6,3 +6,5 @@ requests
 spacy
 streamlit
 wheel
+psycopg2
+SQLAlchemy
