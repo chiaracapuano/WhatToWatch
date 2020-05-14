@@ -29,10 +29,6 @@ class Suggestions:
         else:
             count = 0
 
-
-
-
-
         for i in self.word.split():
             count = count+1
 
@@ -41,6 +37,7 @@ class Suggestions:
             partial = []
             for key in self.db:
                 partial.append(token_i.similarity(self.db[key]))
+            print(len(partial))
             self.df['Scores_' + str(count)] = partial
             self.df['Scores_1'] = 2*self.df['Scores_1']
             if 'Scores_2' in self.df.columns:
@@ -56,15 +53,9 @@ class Suggestions:
 
         self.df['Weights'] = self.df.apply(f_weights, axis=1)
         self.df['Scores_tot'] = self.df['Scores_tot'].mul(self.df['Weights'])
-        return self.df
 
-
-
-
-    def display_results(self):
-        df = self.calculate_weigths()
         df_title = self.df_title
-        grouped = df.groupby(['Code']).mean().reset_index()
+        grouped = self.df.groupby(['Code']).mean().reset_index()
         pd.set_option('display.max_rows', None)
         pd.set_option('display.max_columns', None)
         pd.set_option('display.width', None)

@@ -15,23 +15,16 @@ def dfs_update(update_dbs = False, write_to_csv = False):
         from Movies_Titles import Movie_Titles
         from Rotten_Tomatoes import Ratings
 
-
-
         updated_df = Scraped_Tags()
         df = updated_df.scrape_and_tag()
         df.to_sql('TAGS', engine, if_exists = 'replace')
-        print("TAGS have been updated")
-
-
-        pickled = updated_df.pickle_tags()
-
+        print("TAGS have been updated and picled")
 
         df = pd.read_sql_query('select * from "TAGS"', con=engine)
         updated_titles = Movie_Titles(df)
         df_titles = updated_titles.get_titles()
         df_titles.to_sql('TITLES', engine, if_exists = 'replace')
         print("TITLES have been updated")
-
 
         ratings = Ratings(df_titles)
         df_ratings = ratings.get_ratings()
@@ -51,7 +44,12 @@ def dfs_update(update_dbs = False, write_to_csv = False):
 dfs_update()
 df = pd.read_sql_query('select * from "TAGS"',con=engine)
 df_ratings = pd.read_sql_query('select * from "RATINGS"',con=engine)
+print(len(df))
+nlp = spacy.load('en_core_web_lg')
+rv = joblib.load('filename.pickle')
 
+suggestions = Suggestions(df, df_ratings, "horse", rv, nlp)
+print(suggestions.calculate_weigths())
 
 
 app = Flask(__name__)
@@ -79,7 +77,7 @@ def Suggest():
 
 
     suggestions = Suggestions(df, df_ratings, q, rv, nlp)
-    return suggestions.display_results()
+    return suggestions.calculate_weigths()
 
 
 if __name__ == "__main__":
@@ -102,4 +100,4 @@ if __name__ == "__main__":
            "please wait until server has fully started"))
 
 
-    app.run(debug=True, host='0.0.0.0', threaded = True)
+    app.run(debug=True, threaded = True)

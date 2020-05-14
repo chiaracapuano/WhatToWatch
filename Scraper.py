@@ -16,7 +16,8 @@ class Scraped_Tags:
         identify tags from the description using Rake.
         The Netflix genre tags are also included in the tags.
         This class returns a df that contains Code (movie URL) and Tags (obtained from movie description+Netflix tags).
-        """
+        Dump the identified tags in a pickled file.
+        The pickled file will make the comparison between tags and word in input much faster."""
 
         resp = requests.get('https://www.netflix.com/browse/genre/34399')
         txt = resp.text
@@ -60,13 +61,6 @@ class Scraped_Tags:
                     ]
                 temp = pd.DataFrame.from_records(temp_dict)
                 df = pd.concat([df, temp])
-        return df
-
-
-    def pickle_tags(self):
-        """Dump the identified tags in a pickled file.
-        The pickled file will make the comparison between tags and word in input much faster."""
-
         nlp = spacy.load("en_core_web_lg")
 
         doc_list = {}
@@ -79,4 +73,4 @@ class Scraped_Tags:
         pfile = open("filename.pickle", 'wb')
         pickle.dump(doc_list, pfile, protocol=pickle.HIGHEST_PROTOCOL)
         pfile.close()
-        return "Done pickling tags"
+        return df

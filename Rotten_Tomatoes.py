@@ -12,6 +12,7 @@ class Ratings:
         """Obtain movies titles from the TITLES database.
         Modifies the titles to adapt to the Rotten Tomatoes website standard.
         Returns a DF that will be pushed to PSQL, containing titles and ratings."""
+
         df_title = self.df
 
         new = df_title["Title"].str.split(',"description"', n=1, expand=True)
