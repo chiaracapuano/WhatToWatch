@@ -37,7 +37,6 @@ class Suggestions:
             partial = []
             for key in self.db:
                 partial.append(token_i.similarity(self.db[key]))
-            print(len(partial))
             self.df['Scores_' + str(count)] = partial
             self.df['Scores_1'] = 2*self.df['Scores_1']
             if 'Scores_2' in self.df.columns:

@@ -44,22 +44,24 @@ def dfs_update(update_dbs = False, write_to_csv = False):
 dfs_update()
 df = pd.read_sql_query('select * from "TAGS"',con=engine)
 df_ratings = pd.read_sql_query('select * from "RATINGS"',con=engine)
-print(len(df))
-nlp = spacy.load('en_core_web_lg')
-rv = joblib.load('filename.pickle')
-
-suggestions = Suggestions(df, df_ratings, "horse", rv, nlp)
-print(suggestions.calculate_weigths())
-
 
 app = Flask(__name__)
-
+print("loading model")
+nlp = spacy.load('en_core_web_lg')
+print("loaded model")
+print("loading file")
+try:
+    rv = joblib.load('filename.pickle')
+except:
+    print("Unexpected error:", sys.exc_info()[0])
+    raise
+print("loaded file")
 @app.route("/")
 def home():
     return """
     <html><head></head>
     <body>
-        <h1>Please enter a topic you'd like to watch a movie about/h1>
+        <h1>Please enter a topic you'd like to watch a movie about</h1>
         <h3>Movies obtained from https://www.netflix.com/browse/genre/34399</h3>
         <div>
             <form action="/api/suggest" method="get">
@@ -75,27 +77,13 @@ def home():
 def Suggest():
     q = request.args.get('q')
 
-
     suggestions = Suggestions(df, df_ratings, q, rv, nlp)
     return suggestions.calculate_weigths()
 
 
 if __name__ == "__main__":
-    @st.cache()
-    def load_model(name):
-        return spacy.load(name)
 
 
-    print("loading model")
-    nlp = spacy.load('en_core_web_lg')
-    print("loaded model")
-    print("loading file")
-    try:
-        rv = joblib.load('filename.pickle')
-    except:
-        print("Unexpected error:", sys.exc_info()[0])
-        raise
-    print("loaded file")
     print(("* Loading NLP model and Flask starting server..."
            "please wait until server has fully started"))
 
