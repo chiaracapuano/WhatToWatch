@@ -61,7 +61,7 @@ class Suggestions:
         pd.set_option('display.max_colwidth', None)
         joined = pd.merge(df_title,grouped, left_on='Code', right_on='Code')
         top_suggestions = joined.sort_values('Scores_tot', ascending=False).head(5)
-        top_suggestions['Code'] = top_suggestions['Link']
+        top_suggestions.rename(columns={'Code': 'Link'})
         return top_suggestions[['Title','Link', 'Rating']].to_html(index=False, escape=False)
 
 
