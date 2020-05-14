@@ -1,4 +1,4 @@
-from app.Suggestions import Suggestions
+from Suggestions import Suggestions
 import sys
 import pandas as pd
 import spacy
@@ -10,9 +10,9 @@ engine = create_engine('postgresql+psycopg2://postgres:dasquee@localhost:5432/Wh
 
 def dfs_update(update_dbs = False, write_to_csv = False):
     if update_dbs == True:
-        from app.Scraper import Scraped_Tags
-        from app.Movies_Titles import Movie_Titles
-        from app.Rotten_Tomatoes import Ratings
+        from Scraper import Scraped_Tags
+        from Movies_Titles import Movie_Titles
+        from Rotten_Tomatoes import Ratings
 
         updated_df = Scraped_Tags()
         df = updated_df.scrape_and_tag()
@@ -51,7 +51,7 @@ nlp = spacy.load('en_core_web_lg')
 print("loaded model")
 print("loading file")
 try:
-    rv = joblib.load('filename.pickle')
+    rv = joblib.load('app/filename.pickle')
 except:
     print("Unexpected error:", sys.exc_info()[0])
     raise
