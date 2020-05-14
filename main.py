@@ -44,6 +44,7 @@ def dfs_update(update_dbs = False, write_to_csv = False):
 dfs_update()
 df = pd.read_sql_query('select * from "TAGS"',con=engine)
 df_ratings = pd.read_sql_query('select * from "RATINGS"',con=engine)
+print("loaded dfs")
 
 app = Flask(__name__)
 print("loading model")
