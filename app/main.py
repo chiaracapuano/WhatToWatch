@@ -5,8 +5,8 @@ import spacy
 from flask import Flask, request
 import joblib
 from sqlalchemy import create_engine
-engine = create_engine('postgresql+psycopg2://postgres:dasquee@localhost:5432/WhatToWatch')
 
+engine = create_engine('postgresql+psycopg2://postgres:dasquee@localhost:5432/WhatToWatch')
 
 def dfs_update(update_dbs = False, write_to_csv = False):
     if update_dbs == True:
@@ -51,7 +51,7 @@ nlp = spacy.load('en_core_web_lg')
 print("loaded model")
 print("loading file")
 try:
-    rv = joblib.load('app/filename.pickle')
+    rv = joblib.load('filename.pickle')
 except:
     print("Unexpected error:", sys.exc_info()[0])
     raise
@@ -88,4 +88,4 @@ if __name__ == "__main__":
            "please wait until server has fully started"))
 
 
-    app.run(debug=True, host='0.0.0.0', threaded = True)
+    app.run(debug=True, threaded = True)

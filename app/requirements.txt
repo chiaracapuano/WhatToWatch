@@ -6,5 +6,5 @@ requests
 spacy
 streamlit
 wheel
-psycopg2
+psycopg2-binary
 SQLAlchemy
