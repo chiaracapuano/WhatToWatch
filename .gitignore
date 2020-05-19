@@ -1,0 +1,4 @@
+*.pickle
+*.csv
+pg-data
+postgres-docker
