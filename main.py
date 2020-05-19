@@ -5,9 +5,14 @@ import spacy
 from flask import Flask, request
 import joblib
 from sqlalchemy import create_engine
-from dfs_update import Update_dfs
+import os
 
-engine = create_engine('postgresql+psycopg2://dev_postgres:dasquee@localhost:5434/whattowatch')
+os.environ['POSTGRES_HOST'] = 'dev-postgres'
+os.environ['POSTGRES_PORT'] = '5432'
+host = 'dev-postgres' #os.getenv('POSTGRES_HOST')
+port = '5432'#os.getenv('POSTGRES_PORT')
+print(host, port)
+engine = create_engine('postgresql+psycopg2://dev_postgres:dasquee@'+host+':'+port+'/whattowatch')
 #f'postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}'
 
 
