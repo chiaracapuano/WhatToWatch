@@ -4,7 +4,6 @@ import pandas as pd
 
 
 
-
 class Suggestions:
     def __init__(self, data_frame, data_frame_titles, input_word, file, nlp):
         self.word = input_word
@@ -62,6 +61,8 @@ class Suggestions:
         joined = pd.merge(df_title,grouped, left_on='Code', right_on='Code')
         top_suggestions = joined.sort_values('Scores_tot', ascending=False).head(5)
         top_suggestions.rename(columns={'Code': 'Link'}, inplace = True)
-        return top_suggestions[['Title','Link', 'Rating']].to_html(index=False, escape=False)
+        top_suggestions.fillna(value='Tomatometer not available', inplace=True)
+        top_suggestions["Rating"] = top_suggestions["Rating"].replace('null', 'Tomatometer not available')
+        return top_suggestions[['Title','Link', 'Rating']].to_html(index=False, escape=False, render_links = True)
 
 
