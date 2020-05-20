@@ -63,6 +63,6 @@ class Suggestions:
         top_suggestions.rename(columns={'Code': 'Link'}, inplace = True)
         top_suggestions.fillna(value='Tomatometer not available', inplace=True)
         top_suggestions["Rating"] = top_suggestions["Rating"].replace('null', 'Tomatometer not available')
-        return top_suggestions[['Title','Link', 'Rating']].to_html(index=False, escape=False, render_links = True)
+        return top_suggestions[['Title','Link', 'Rating']]#.to_html(index=False, escape=False, render_links = True)
 
 

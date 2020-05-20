@@ -2,13 +2,17 @@ from Suggestions import Suggestions
 import sys
 import pandas as pd
 import spacy
-from flask import Flask, request
+from flask import Flask, request, Response
 import joblib
 from sqlalchemy import create_engine
+import configparser
 
+configParser = configparser.RawConfigParser()
+configFilePath = './login.config'
+configParser.read(configFilePath)
+host = configParser.get('dev-postgres-config', 'host')
+port = configParser.get('dev-postgres-config', 'port')
 
-host = 'dev-postgres'
-port = '5432'
 
 app = Flask(__name__)
 engine = create_engine('postgresql+psycopg2://dev_postgres:dasquee@'+host+':'+port+'/whattowatch')
@@ -61,7 +65,8 @@ def home():
 def Suggest():
     q = request.args.get('q')
     suggestions = Suggestions(df, df_ratings, q, rv, nlp)
-    return suggestions.calculate_weigths()
+    result = suggestions.calculate_weigths()
+    return Response(result.to_json(orient="records"), mimetype='application/json')
 
 
 
