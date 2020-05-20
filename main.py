@@ -7,18 +7,15 @@ import joblib
 from sqlalchemy import create_engine
 import os
 
-os.environ['POSTGRES_HOST'] = 'dev-postgres'
-os.environ['POSTGRES_PORT'] = '5432'
-host = 'dev-postgres' #os.getenv('POSTGRES_HOST')
-port = '5432'#os.getenv('POSTGRES_PORT')
+
+host = 'dev-postgres'
+port = '5432'
 print(host, port)
-engine = create_engine('postgresql+psycopg2://dev_postgres:dasquee@'+host+':'+port+'/whattowatch')
-#f'postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}'
+engine = create_engine('postgresql+psycopg2://dev_postgres:dasquee@localhost:5434/whattowatch')
 
 
 df = pd.read_sql_query('select * from "TAGS"', con=engine)
-df_ratings = pd.read_sql_query('select * from "RATINGS"', con=engine)
-print("update_dfs", df)
+df_ratings = pd.read_sql_query('select * from "TITLES_AND_RATINGS"', con=engine)
 
 print("loaded dfs")
 
@@ -53,16 +50,9 @@ def home():
 @app.route("/api/suggest")
 def Suggest():
     q = request.args.get('q')
-
     suggestions = Suggestions(df, df_ratings, q, rv, nlp)
     return suggestions.calculate_weigths()
 
 
 if __name__ == "__main__":
-
-
-    print(("* Loading NLP model and Flask starting server..."
-           "please wait until server has fully started"))
-
-
     app.run(debug=True, threaded = True)

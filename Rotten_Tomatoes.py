@@ -68,7 +68,15 @@ class Ratings:
             with open('unidentified_titles.txt', 'w') as filehandle:
                 for listitem in bad_titles:
                     filehandle.write('%s\n' % listitem)
+
+
+
             print("RATINGS have been updated")
+            con.execute('drop table if exists TITLES_AND_RATINGS_OLD')
+
+            con.execute('alter table if exists TITLES_AND_RATINGS rename to TITLES_AND_RATINGS_OLD')
+            con.execute('create table TITLES_AND_RATINGS ( Code varchar not null, Title varchar, Title_to_merge varchar, Rating varchar)')
 
             joined = pd.merge(df_title,df, left_on='Title_to_merge', right_on='Title_to_merge')
+            joined.to_sql('TITLES_AND_RATINGS', self.engine, if_exists='replace', index=False)
             return joined

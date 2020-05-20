@@ -6,4 +6,4 @@ engine = create_engine('postgresql+psycopg2://dev_postgres:dasquee@localhost:543
 
 update_dfs = Update_dfs(engine)
 update_dfs.obtain_dfs()
-print("All dfs updated")
+print("All dfs created/updated")
