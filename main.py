@@ -21,13 +21,14 @@ df = pd.read_sql_query('select * from "TAGS"', con=engine)
 df_ratings = pd.read_sql_query('select * from "TITLES_AND_RATINGS"', con=engine)
 
 print("loaded dfs")
+#docker push achiaracapuano/postgres:dev
 
 print("loading model")
 nlp = spacy.load('en_core_web_lg')
 print("loaded model")
 print("loading file")
 try:
-    rv = joblib.load('filename.pickle')
+    rv = joblib.load('update-database/filename.pickle')
 except:
     print("Unexpected error:", sys.exc_info()[0])
     raise

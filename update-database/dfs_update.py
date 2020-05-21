@@ -1,5 +1,3 @@
-from Scraper import Scraped_Tags
-from Movies_Titles import Movie_Titles
 from Rotten_Tomatoes import Ratings
 import pandas as pd
 
