@@ -15,7 +15,9 @@ port = configParser.get('dev-postgres-config', 'port')
 
 
 app = Flask(__name__)
+print(host, port)
 engine = create_engine('postgresql+psycopg2://dev_postgres:dasquee@'+host+':'+port+'/whattowatch')
+
 
 df = pd.read_sql_query('select * from "TAGS"', con=engine)
 df_ratings = pd.read_sql_query('select * from "TITLES_AND_RATINGS"', con=engine)
