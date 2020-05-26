@@ -49,5 +49,9 @@ _docker build -t <DOCKERHUB_FLASK_CONTAINER>  ._
 The containers are linked together:
 
 _docker run -it -p 5000:5000 --link <NAME> -e POSTGRES_PORT=<DOCKERHUB_POSTGRES_CONTAINER_PORT> -e POSTGRES_HOST=<NAME> -e POSTGRES_PASSWORD=<PWD> <DOCKERHUB_FLASK_CONTAINER>_
+  
+***Nxt Steps...***
+* Link Docker containers through Kubernetes
+* Deploy app in Angular
 
 
