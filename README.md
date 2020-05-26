@@ -38,16 +38,16 @@ _docker build -f ./psql/Dockerfile -t <DOCKERHUB_POSTGRES_CONTAINER> ./psql/_
 
 and 
 
-*docker run --rm -d  --name <NAME> -v ${HOME}/postgres-data/:/var/lib/postgresql/data  -p <POSTGRES_LOCAL_PORT>:<DOCKERHUB_POSTGRES_CONTAINER_PORT>  <DOCKERHUB_POSTGRES_CONTAINER>*
+_docker run --rm -d  --name <NAME> -v ${HOME}/postgres-data/:/var/lib/postgresql/data  -p <POSTGRES_LOCAL_PORT>:<DOCKERHUB_POSTGRES_CONTAINER_PORT>  <DOCKERHUB_POSTGRES_CONTAINER>_
 
 Run **main_updateDB.py** connecting to the container's address to populate the Postgres DB.
 
 The flask container is built via:
 
-*docker build -t <DOCKERHUB_FLASK_CONTAINER>  .*
+_docker build -t <DOCKERHUB_FLASK_CONTAINER>  ._
 
 The containers are linked together:
 
-*docker run -it -p 5000:5000 --link <NAME> -e POSTGRES_PORT=<DOCKERHUB_POSTGRES_CONTAINER_PORT> -e POSTGRES_HOST=<NAME> -e POSTGRES_PASSWORD=<PWD> <DOCKERHUB_FLASK_CONTAINER>*
+_docker run -it -p 5000:5000 --link <NAME> -e POSTGRES_PORT=<DOCKERHUB_POSTGRES_CONTAINER_PORT> -e POSTGRES_HOST=<NAME> -e POSTGRES_PASSWORD=<PWD> <DOCKERHUB_FLASK_CONTAINER>_
 
 
