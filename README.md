@@ -11,3 +11,13 @@ Also, this dataframe is pickled in Scraper.py: this move is necessary in that it
 * TITLES: produced by Movies_Titles.py. This table contains the Netflix web address of a specific movie and the movie title, both obtained by scraping the Netflix movie website. 
 * RATINGS: produced by Rotten_Tomatoes.py. This table is obtained scraping the Rotten Tomatoes website to obtain the Tomatometer rating of the movies scraped from Netflix. The movie titles are obtained from the table TITLES and modified to suit the Rotten Tomatoes movie web addresses. 
 * TITLES_AND_RATINGS: produced by Rotten_Tomatoes.py. This table contains the movies titles in displayed both in a user friendly manner (as per table TITLES) and Rotten Tomatoes website suitable, together with the Tomatometer rating.
+
+
+**main.py** in the main folder contains the development of the Flask app. The movies suggestions are evaluated in Suggestions.py, where the user input words are compared, one by one, with the indivdual tags contained in the table TAGS. The semantic similarity is calculated by SpaCy (0-1 scale), and a similarity index is provided for each one of the tags with respect to the user search term: by taking the cube of the similarity indexes, as well as multiplying the indexes < 0.5 by 0.1, the low similarity indexes are punished.
+
+Also, it is assumed that the first two search terms entered by the user are the most relevant for the comparison with the tags, therefore the similarity indexes calculatedfor the first search term are multiplied by 2, for the second term by 1.5. 
+
+The indexes obtained are averaged across the movie titles, and in output the top 5 suggestions are provided in json format, containing the movies title, Netflix link and Tomatometer rating.
+
+The json format is required to accommodate for furture plans of transformin the Flask app in an Angular based webapp.
+
