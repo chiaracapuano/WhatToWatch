@@ -1,6 +1,10 @@
 # WhatToWatch
 This repo contains the development of a simple Flask app, that suggests Netflix movie titles based on user input.
 
+***PART I*** 
+* DB creation/update
+* Flask App developement
+
 The folder **update-database** contains the **main_updateDB.py** program, that should be run for update/creation of DB purposes.
 
 The DB is located in Postgres and is accessed via sqlalchemy. The connection details are contained in a login.config file, an example of which is available in login.config.example.
@@ -20,4 +24,8 @@ Also, it is assumed that the first two search terms entered by the user are the 
 The indexes obtained are averaged across the movie titles, and in output the top 5 suggestions are provided in json format, containing the movies title, Netflix link and Tomatometer rating.
 
 The json format is required to accommodate for furture plans of transformin the Flask app in an Angular based webapp.
+
+***PART II*** 
+* Creation of Docker containers
+
 
