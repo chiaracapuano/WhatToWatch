@@ -10,13 +10,13 @@ import configparser
 configParser = configparser.RawConfigParser()
 configFilePath = './login.config'
 configParser.read(configFilePath)
+user = configParser.get('dev-postgres-config', 'user')
+pwd = configParser.get('dev-postgres-config', 'pwd')
 host = configParser.get('dev-postgres-config', 'host')
 port = configParser.get('dev-postgres-config', 'port')
 
-
 app = Flask(__name__)
-print(host, port)
-engine = create_engine('postgresql+psycopg2://dev_postgres:dasquee@'+host+':'+port+'/whattowatch')
+engine = create_engine('postgresql+psycopg2://'+user+':'+pwd+'@'+host+':'+port+'/whattowatch')
 
 
 df = pd.read_sql_query('select * from "TAGS"', con=engine)
