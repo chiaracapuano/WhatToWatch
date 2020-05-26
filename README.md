@@ -34,7 +34,7 @@ Two containers are built and run: a container for the Postgres DB and a containe
 
 The Postgres container is built via the Dockerfile contained in the folder **psql**, executing the commands:
 
-*docker build -f ./psql/Dockerfile -t <DOCKERHUB_POSTGRES_CONTAINER> ./psql/
+_docker build -f ./psql/Dockerfile -t <DOCKERHUB_POSTGRES_CONTAINER> ./psql/_
 
 and 
 
