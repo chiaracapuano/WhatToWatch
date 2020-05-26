@@ -4,13 +4,12 @@ import pandas as pd
 import re
 from unidecode import unidecode
 import urllib.request
+
 class Ratings:
     def __init__(self, titles_df, refresh_on_start, engine):
         self.df = titles_df
         self.refresh_on_start = refresh_on_start
         self.engine = engine
-
-
 
     def get_ratings(self):
         """Obtain movies titles from the TITLES database.

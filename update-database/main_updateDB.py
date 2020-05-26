@@ -1,7 +1,16 @@
 from sqlalchemy import create_engine
 from dfs_update import Update_dfs
+import configparser
 
-engine = create_engine('postgresql+psycopg2://dev_postgres:dasquee@localhost:5434/whattowatch')
+configParser = configparser.RawConfigParser()
+configFilePath = './login.config'
+configParser.read(configFilePath)
+user = configParser.get('dev-postgres-config', 'user')
+pwd = configParser.get('dev-postgres-config', 'pwd')
+host = configParser.get('dev-postgres-config', 'host')
+port = configParser.get('dev-postgres-config', 'port')
+
+engine = create_engine('postgresql+psycopg2://'+user+':'+pwd+'@'+host+':'+port+'/whattowatch')
 
 
 update_dfs = Update_dfs(engine)

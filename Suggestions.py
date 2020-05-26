@@ -36,13 +36,16 @@ class Suggestions:
             partial = []
             for key in self.db:
                 partial.append(token_i.similarity(self.db[key]))
+
             self.df['Scores_' + str(count)] = partial
+
+            self.df['Scores_' + str(count)] = self.df['Scores_' + str(count)].mul(self.df['Scores_' + str(count)]).mul(self.df['Scores_' + str(count)])
+
             self.df['Scores_1'] = 2*self.df['Scores_1']
+
             if 'Scores_2' in self.df.columns:
                 self.df['Scores_2'] = 1.5 * self.df['Scores_2']
-            else:
-                self.df['Scores_NoSq_' + str(count)]= self.df['Scores_'+str(count)]
-                self.df['Scores_' + str(count)] = self.df['Scores_' + str(count)].mul(self.df['Scores_' + str(count)]).mul(self.df['Scores_' + str(count)])
+
 
         self.df['Scores_tot'] = 0
 

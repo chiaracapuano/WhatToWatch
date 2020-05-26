@@ -5,7 +5,9 @@ import pickle
 from bs4 import BeautifulSoup
 import pandas as pd
 from rake_nltk import Metric, Rake
+from nltk.corpus import stopwords
 import spacy
+import string
 
 class Scraped_Tags:
     def __init__(self, refresh_on_start, engine):
@@ -34,9 +36,11 @@ class Scraped_Tags:
             soup = BeautifulSoup(txt, 'html.parser')
             df = pd.DataFrame()
 
+            stop_words = set(stopwords.words('english'))
 
-            r_noStopWords = Rake(ranking_metric=Metric.DEGREE_TO_FREQUENCY_RATIO,
-                                 punctuations=',()’"?!,"-.')  # Uses stopwords for english from NLTK, and all puntuation characters.
+            r = Rake(ranking_metric=Metric.DEGREE_TO_FREQUENCY_RATIO,
+                     punctuations = string.punctuation,
+                     stopwords=stop_words)
             bad_links = []
             for a in soup.find_all('a', {'class': "nm-collections-title nm-collections-link"}):
                 url = a['href']
@@ -47,8 +51,8 @@ class Scraped_Tags:
 
                     for d in soup.find_all('div', {'class': "title-info-synopsis"}):
                         i = d.text
-                        r_noStopWords.extract_keywords_from_text(i)
-                        rks_noStopWords = r_noStopWords.get_ranked_phrases()
+                        r.extract_keywords_from_text(i)
+                        rks_noStopWords = r.get_ranked_phrases()
 
                         for wrd in rks_noStopWords:
                             splitted = wrd.split()

@@ -1,9 +1,0 @@
-bs4
-cachetools
-flask
-joblib
-requests
-streamlit
-wheel
-psycopg2-binary
-SQLAlchemy
