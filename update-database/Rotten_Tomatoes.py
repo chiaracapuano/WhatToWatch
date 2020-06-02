@@ -78,4 +78,5 @@ class Ratings:
 
             joined = pd.merge(df_title,df, left_on='Title_to_merge', right_on='Title_to_merge')
             joined.to_sql('TITLES_AND_RATINGS', self.engine, if_exists='replace', index=False)
+            print("RATINGS and TITLES have been updated")
             return joined

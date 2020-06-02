@@ -35,5 +35,6 @@ class Update_dfs:
             df_titles = pd.read_sql_query('select * from "TITLES"', con=self.engine)
             ratings = Ratings(df_titles, refresh_on_start, con)
             ratings.get_ratings()
+            print("DB has been updated")
 
 

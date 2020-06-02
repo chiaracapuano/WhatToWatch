@@ -3,3 +3,7 @@
 pg-data
 postgres-docker
 *.config
+db_files
+docker-entrypoint-initdb.d
+kubernete_sample
+kubernetes

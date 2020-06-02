@@ -18,17 +18,16 @@ port = configParser.get('dev-postgres-config', 'port')
 app = Flask(__name__)
 engine = create_engine('postgresql+psycopg2://'+user+':'+pwd+'@'+host+':'+port+'/whattowatch')
 
-
+print("loading dfs")
 df = pd.read_sql_query('select * from "TAGS"', con=engine)
 df_ratings = pd.read_sql_query('select * from "TITLES_AND_RATINGS"', con=engine)
-
 print("loaded dfs")
-#docker push achiaracapuano/postgres:dev
 
 print("loading model")
 nlp = spacy.load('en_core_web_lg')
 print("loaded model")
-print("loading file")
+
+print("loading pickled file")
 try:
     rv = joblib.load('update-database/filename.pickle')
 except:
