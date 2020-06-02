@@ -1,6 +1,8 @@
 # WhatToWatch
 This repo contains the development of a simple Flask app, that suggests Netflix movie titles based on user input.
 
+The app pulls data from a Postgres DB and suggests movie titles usign a pre-trained Natural Language Processing package offered by Python: SpaCy. The app is deployed in Docker.
+
 ***PART I*** 
 * DB creation/update
 * Flask App developement
@@ -27,5 +29,29 @@ The json format is required to accommodate for furture plans of transformin the 
 
 ***PART II*** 
 * Creation of Docker containers
+
+Two containers are built and run: a container for the Postgres DB and a container for the Flas app. They are subsequently linked together.
+
+The Postgres container is built via the Dockerfile contained in the folder **psql**, executing the commands:
+
+_docker build -f ./psql/Dockerfile -t <DOCKERHUB_POSTGRES_CONTAINER> ./psql/_
+
+and 
+
+_docker run --rm -d  --name <NAME> -v ${HOME}/postgres-data/:/var/lib/postgresql/data  -p <POSTGRES_LOCAL_PORT>:<DOCKERHUB_POSTGRES_CONTAINER_PORT>  <DOCKERHUB_POSTGRES_CONTAINER>_
+
+Run **main_updateDB.py** connecting to the container's address to populate the Postgres DB.
+
+The flask container is built via:
+
+_docker build -t <DOCKERHUB_FLASK_CONTAINER>  ._
+
+The containers are linked together:
+
+_docker run -it -p 5000:5000 --link <NAME> -e POSTGRES_PORT=<DOCKERHUB_POSTGRES_CONTAINER_PORT> -e POSTGRES_HOST=<NAME> -e POSTGRES_PASSWORD=<PWD> <DOCKERHUB_FLASK_CONTAINER>_
+  
+***Nxt Steps...***
+* Link Docker containers through Kubernetes
+* Deploy app in Angular
 
 
