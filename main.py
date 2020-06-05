@@ -2,7 +2,7 @@ from Suggestions import Suggestions
 import sys
 import pandas as pd
 import spacy
-from flask import Flask, request, Response
+from flask import Flask, request, Response, render_template
 import joblib
 from sqlalchemy import create_engine
 import configparser
@@ -40,28 +40,7 @@ print("loaded file")
 
 @app.route("/")
 def home():
-    return """
-    <html><head></head>
-    <style> 
-            body { 
-                text-align:center; 
-            } 
-            h1 { 
-                color:green; 
-            } 
-        </style>
-    <body>
-        <h1>Please enter a topic you'd like to watch a movie about</h1>
-        <h3>Movies obtained from https://www.netflix.com/browse/genre/34399</h3>
-        <div>
-            <form action="/api/suggest" method="get">
-                <label for="q">Topic:</label><br>
-                <input type="text" id="q" name="q" value=""><br>
-            </form>
-        </div>
-        </body>
-    </html>
-           """
+    return render_template("home.html")
 
 @app.route("/api/suggest")
 def Suggest():

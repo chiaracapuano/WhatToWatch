@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html><head></head>
+    <style>
+            body {
+                text-align:center;
+            }
+            h1 {
+                color:green;
+            }
+        </style>
+    <body>
+        <h1>Please enter a topic you'd like to watch a movie about</h1>
+        <h3>Movies obtained from https://www.netflix.com/browse/genre/34399</h3>
+        <div>
+            <form action="/api/suggest" method="get">
+                <label for="q">Topic:</label><br>
+                <input type="text" id="q" name="q" value=""><br>
+            </form>
+        </div>
+        </body>
+    </html>
