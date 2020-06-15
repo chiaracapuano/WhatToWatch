@@ -8,7 +8,7 @@ class Suggestions:
     def __init__(self, data_frame, data_frame_titles, input_word, file, nlp):
         self.word = input_word
         self.df = data_frame
-        self.df_title = data_frame_titles
+        self.df_titles_and_ratings = data_frame_titles
         self.db = file
         self.nlp = nlp
 
@@ -62,14 +62,15 @@ class Suggestions:
         self.df['Weights'] = self.df.apply(f_weights, axis=1)
         self.df['Scores_tot'] = self.df['Scores_tot'].mul(self.df['Weights'])
 
-        df_title = self.df_title
+        df_titles_and_ratings = self.df_titles_and_ratings
         grouped = self.df.groupby(['Code']).mean().reset_index()
         pd.set_option('display.max_rows', None)
         pd.set_option('display.max_columns', None)
         pd.set_option('display.width', None)
         pd.set_option('display.max_colwidth', None)
-        joined = pd.merge(df_title,grouped, left_on='Code', right_on='Code')
+        joined = pd.merge(df_titles_and_ratings, grouped, left_on='Code', right_on='Code')
         top_suggestions = joined.sort_values('Scores_tot', ascending=False).head(5)
+        print(grouped.sort_values('Scores_tot', ascending=False).head(5))
         top_suggestions.rename(columns={'Code': 'Link'}, inplace = True)
         top_suggestions.fillna(value='Tomatometer not available', inplace=True)
         top_suggestions["Rating"] = top_suggestions["Rating"].replace('null', 'Tomatometer not available')

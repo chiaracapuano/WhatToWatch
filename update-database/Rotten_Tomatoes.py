@@ -15,6 +15,7 @@ class Ratings:
         """Obtain movies titles from the TITLES database.
         Modifies the titles to adapt to the Rotten Tomatoes website standard.
         Returns a DF that will be pushed to PSQL, containing titles and ratings."""
+
         if self.refresh_on_start == True:
             con = self.engine.connect()
             con.execute('drop table if exists RATINGS_OLD')
@@ -34,7 +35,7 @@ class Ratings:
             df_title["Title_to_merge"] = df_title["Title_to_merge"].astype(str).str.replace('&', 'and')
             df_title["Title_to_merge"]  = df_title["Title_to_merge"].astype(str).str.lower()
             df_title["Title_to_merge"] = df_title["Title_to_merge"].astype(str).apply(unidecode)
-
+            df_title = df_title.drop_duplicates()
             bad_titles = []
 
             pattern = '"ratingValue":(.*),"reviewCount"'
@@ -43,7 +44,7 @@ class Ratings:
 
             for title in df_title['Title_to_merge']:
                 try:
-                    r  =requests.get('https://www.rottentomatoes.com/m/'+title)
+                    r = requests.get('https://www.rottentomatoes.com/m/'+title)
                     txt = r.text
 
                     soup = BeautifulSoup(txt, 'html.parser')

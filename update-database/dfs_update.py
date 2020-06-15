@@ -25,12 +25,12 @@ class Update_dfs:
             refresh_on_start = self.refresh_on_start
             print("Refreshing DB Tables")
 
-            scraped_tags = Scraped_Tags(refresh_on_start, con)
-            scraped_tags.scrape_and_tag()
+            #scraped_tags = Scraped_Tags(refresh_on_start, con)
+            #scraped_tags.scrape_and_tag()
 
-            df = pd.read_sql_query('select * from "TAGS"', con=self.engine)
-            movie_titles = Movie_Titles(df, refresh_on_start, con)
-            movie_titles.get_titles()
+            #df = pd.read_sql_query('select * from "TAGS"', con=self.engine)
+            #movie_titles = Movie_Titles(df, refresh_on_start, con)
+            #movie_titles.get_titles()
 
             df_titles = pd.read_sql_query('select * from "TITLES"', con=self.engine)
             ratings = Ratings(df_titles, refresh_on_start, con)

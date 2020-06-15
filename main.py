@@ -20,7 +20,7 @@ engine = create_engine('postgresql+psycopg2://'+user+':'+pwd+'@'+host+':'+port+'
 
 print("loading dfs")
 df = pd.read_sql_query('select * from "TAGS"', con=engine)
-df_ratings = pd.read_sql_query('select * from "TITLES_AND_RATINGS"', con=engine)
+df_titles_and_ratings = pd.read_sql_query('select * from "TITLES_AND_RATINGS"', con=engine)
 print("loaded dfs")
 
 print("loading model")
@@ -45,7 +45,7 @@ def home():
 @app.route("/api/suggest")
 def Suggest():
     q = request.args.get('q')
-    suggestions = Suggestions(df, df_ratings, q, rv, nlp)
+    suggestions = Suggestions(df, df_titles_and_ratings, q, rv, nlp)
     result = suggestions.calculate_weigths()
     return result #TO OBTAIN JSON: Response(result.to_json(orient="records"), mimetype='application/json')
 
