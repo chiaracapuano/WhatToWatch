@@ -12,7 +12,6 @@ RUN pip install requests
 EXPOSE 5000
 CMD python ./main.py
 
-
 #docker build -t python-app/dev .
 #docker run -e DB_PORT=5432 -e DB_HOST=docker.for.mac.host.internal
 #psql postgresql://postgres:dasquee@localhost:5432/WhatToWatch

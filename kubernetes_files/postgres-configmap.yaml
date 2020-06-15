@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: whattowatch
+  POSTGRES_USER: dev_postgres
+  POSTGRES_PASSWORD: dasquee

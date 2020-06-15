@@ -1,9 +1,10 @@
 *.pickle
 *.csv
+*.txt
 pg-data
 postgres-docker
 *.config
 db_files
 docker-entrypoint-initdb.d
 kubernete_sample
-kubernetes
+kubernetes_files

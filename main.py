@@ -47,7 +47,7 @@ def Suggest():
     q = request.args.get('q')
     suggestions = Suggestions(df, df_ratings, q, rv, nlp)
     result = suggestions.calculate_weigths()
-    return Response(result.to_json(orient="records"), mimetype='application/json')
+    return result #TO OBTAIN JSON: Response(result.to_json(orient="records"), mimetype='application/json')
 
 
 

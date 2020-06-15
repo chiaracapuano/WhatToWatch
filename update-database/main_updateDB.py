@@ -3,7 +3,7 @@ from dfs_update import Update_dfs
 import configparser
 
 configParser = configparser.RawConfigParser()
-configFilePath = './login.config'
+configFilePath = '/Users/chiara/PycharmProjects/WhatToWatch_GITHUB/login.config'
 configParser.read(configFilePath)
 user = configParser.get('dev-postgres-config', 'user')
 pwd = configParser.get('dev-postgres-config', 'pwd')

@@ -13,8 +13,13 @@ class Suggestions:
         self.nlp = nlp
 
     def calculate_weigths(self):
-        """Compares movies tags with user input word.
-        Tags are contained in picked file given as class argument."""
+        """Compares movies tags with user input word. A semantic similarity score is obtained.
+        Tags are contained in picked file given as class argument.
+        The score is cubed to "punish" low scores and enhance high scores.
+        A simple weighting system is applied (0.1 weight for scores <0.5, 1 otherwise.
+        If there is more than a word in input, the first one's scores are multiplied by 2,
+        the second input word scores multiplied by 1.5.
+        """
 
         def f_weights(row):
             if row['Scores_tot'] >= 0.5:
@@ -39,7 +44,9 @@ class Suggestions:
 
             self.df['Scores_' + str(count)] = partial
 
-            self.df['Scores_' + str(count)] = self.df['Scores_' + str(count)].mul(self.df['Scores_' + str(count)]).mul(self.df['Scores_' + str(count)])
+            self.df['Scores_' + str(count)] = self.df['Scores_' + str(count)].\
+                mul(self.df['Scores_' + str(count)]).\
+                mul(self.df['Scores_' + str(count)])
 
             self.df['Scores_1'] = 2*self.df['Scores_1']
 
@@ -66,6 +73,6 @@ class Suggestions:
         top_suggestions.rename(columns={'Code': 'Link'}, inplace = True)
         top_suggestions.fillna(value='Tomatometer not available', inplace=True)
         top_suggestions["Rating"] = top_suggestions["Rating"].replace('null', 'Tomatometer not available')
-        return top_suggestions[['Title','Link', 'Rating']]#TO OUTPUT A DF: .to_html(index=False, escape=False, render_links = True)
+        return top_suggestions[['Title','Link', 'Rating']].to_html(index=False, escape=False, render_links = True)
 
 

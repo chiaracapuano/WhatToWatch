@@ -1,0 +1,31 @@
+version: '3.6'
+
+services:
+  api:
+    build: .
+    depends_on:
+      - db
+    environment:
+      STAGE: test
+      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://dev_postgres:dasquee@db/whattowatch
+    networks:
+      - default
+    ports:
+      - 5000:5000
+    volumes:
+      - ./app:/usr/src/app/app
+    restart: always
+
+  db:
+    environment:
+      POSTGRES_USER: dev_postgres
+      POSTGRES_PASSWORD: dasquee
+      POSTGRES_DB: whattowatch
+    image: achiaracapuano/whattowatch:postgres
+    networks:
+      - default
+    ports:
+      - 5434:5432
+    restart: always
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
