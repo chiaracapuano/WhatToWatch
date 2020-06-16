@@ -1,7 +1,7 @@
 import warnings
 warnings.filterwarnings("ignore")
 import pandas as pd
-from jinja2 import Environment, PackageLoader, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader
 
 
 class Suggestions:
