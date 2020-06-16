@@ -1,7 +1,7 @@
 import warnings
 warnings.filterwarnings("ignore")
 import pandas as pd
-
+from jinja2 import Environment, PackageLoader, FileSystemLoader
 
 
 class Suggestions:
@@ -16,17 +16,11 @@ class Suggestions:
         """Compares movies tags with user input word. A semantic similarity score is obtained.
         Tags are contained in picked file given as class argument.
         The score is cubed to "punish" low scores and enhance high scores.
-        A simple weighting system is applied (0.1 weight for scores <0.5, 1 otherwise.
         If there is more than a word in input, the first one's scores are multiplied by 2,
         the second input word scores multiplied by 1.5.
+        The HTML code for rendering the dataframe is contained in ./templetes/output.html
         """
 
-        def f_weights(row):
-            if row['Scores_tot'] >= 0.5:
-                val = 1
-            else:
-                val = 0.1
-            return val
 
         if len(self.word) == 0:
             print("Empty word")
@@ -59,21 +53,22 @@ class Suggestions:
         for i in range(1, count+1):
             self.df['Scores_tot'] = self.df['Scores_tot'] + self.df['Scores_'+str(i)]
 
-        self.df['Weights'] = self.df.apply(f_weights, axis=1)
-        self.df['Scores_tot'] = self.df['Scores_tot'].mul(self.df['Weights'])
 
         df_titles_and_ratings = self.df_titles_and_ratings
         grouped = self.df.groupby(['Code']).mean().reset_index()
         pd.set_option('display.max_rows', None)
         pd.set_option('display.max_columns', None)
-        pd.set_option('display.width', None)
+        pd.set_option('display.width', 400)
         pd.set_option('display.max_colwidth', None)
         joined = pd.merge(df_titles_and_ratings, grouped, left_on='Code', right_on='Code')
         top_suggestions = joined.sort_values('Scores_tot', ascending=False).head(5)
-        print(grouped.sort_values('Scores_tot', ascending=False).head(5))
         top_suggestions.rename(columns={'Code': 'Link'}, inplace = True)
         top_suggestions.fillna(value='Tomatometer not available', inplace=True)
         top_suggestions["Rating"] = top_suggestions["Rating"].replace('null', 'Tomatometer not available')
-        return top_suggestions[['Title','Link', 'Rating']].to_html(index=False, escape=False, render_links = True)
 
+        env = Environment(loader=FileSystemLoader('./templates'))
 
+        template = env.get_template("output.html")
+
+        template_vars = {"top_suggestions": top_suggestions[['Title','Link', 'Rating']].to_html(index=False, escape=False, render_links = True)}
+        return template.render(template_vars)

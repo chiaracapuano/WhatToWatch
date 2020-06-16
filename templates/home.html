@@ -2,20 +2,38 @@
 <html><head></head>
     <style>
             body {
-                text-align:center;
+                background: black;
             }
             h1 {
-                color:green;
+                color:red;
             }
+            h3 {
+                color:darkgrey;
+            }
+            div {
+                height: 200px;
+                width: 500px;
+
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                margin-top: -200px;
+                margin-left: -200px;
+                font-family: SansSerif;
+            }
+
+
+
+
         </style>
-    <body>
-        <h1>Please enter a topic you'd like to watch a movie about</h1>
-        <h3>Movies obtained from https://www.netflix.com/browse/genre/34399</h3>
-        <div>
+        <div class="my_text">
+
+        <h1 style="text-align:center">What would you like to watch a movie about?</h1>
             <form action="/api/suggest" method="get">
-                <label for="q">Topic:</label><br>
-                <input type="text" id="q" name="q" value=""><br>
+                <input style="display:block; margin : 0 auto;" type="text" id="q" name="q" value="" width="70" height="96"><br>
             </form>
+                    <h3 style="text-align:center">Movies obtained from https://www.netflix.com/browse/genre/34399</h3>
+
         </div>
         </body>
     </html>
