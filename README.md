@@ -117,7 +117,7 @@ https://severalnines.com/database-blog/using-kubernetes-deploy-postgresql
 The command run to deploy the DB is: 
 
 ```
-kf apply -f ./kubernetes_files/infrastructure/
+kubectl apply -f ./kubernetes_files/infrastructure/
 ```
 
 The DB is populated simply copying the local Postgres DB of interest in the Kubernetes Postgres instance (I use DataGrip to do this).
@@ -133,15 +133,15 @@ and they rely on the Dockerhub image of the Flask app produced in the previous s
 The pod is deployed via:
 
 ```
-kf apply -f ./kubernetes_files/app/ 
+kubectl apply -f ./kubernetes_files/app/ 
 ```
 
 and the app is run via:
 
 ```
-kc logs -f --tail=-1 -l app=whattowatch --all-containers=true  
+kubectl get svc whattowatch
 ```
-
+Get the service port (KC_PORT) as displayed by the previous command and connect to: 0.0.0.0:KC_PORT.
 
 
 
