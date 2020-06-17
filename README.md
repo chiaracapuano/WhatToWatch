@@ -1,8 +1,6 @@
 # WhatToWatch
 This repo contains the development of a simple Flask app, that suggests Netflix movie titles based on user input.
 
-[here](#Python)
-
 The app pulls movie tags and titles from a Postgres DB, evaluates the semantic similarity between user input words and tags using Python SpaCy and displays the suggestions in a table that shows the top 5 movies identified and their Tomatometer rating. 
 
 The app is containerized in Docker and deployed to Kubernetes.
@@ -15,6 +13,11 @@ and **output** as produced by the app, when the topic is *scientists*:
 
 ![alt text](https://github.com/chiaracapuano/WhatToWatch/blob/master/png-example/output.png)
 
+The following sections discuss respectively the Python, Docker and Kubernetes codes:
+
+[Python-Code](#Python)
+[PDocker-Code](#Docker)
+[Kubernetes-Code](#Kubernetes)
 
 ### Python
 Folders:
@@ -49,7 +52,7 @@ The indexes obtained are averaged across the movie titles, and in output the top
 The library Jinja 2 is used to render the dataframe in output.
 
 
-***Docker Part*** 
+### Docker
 * Creation of Docker containers
 
 Two containers are built and run: a container for the Postgres DB and a container for the Flas app. They are subsequently linked together.
@@ -72,8 +75,7 @@ The containers are linked together:
 
 _docker run -it -p 5000:5000 --link <NAME> -e POSTGRES_PORT=<DOCKERHUB_POSTGRES_CONTAINER_PORT> -e POSTGRES_HOST=<NAME> -e POSTGRES_PASSWORD=<PWD> <DOCKERHUB_FLASK_CONTAINER>_
   
-***Nxt Steps...***
-* Link Docker containers through Kubernetes
-* Deploy app in Angular
+### Kubernetes
+
 
 
