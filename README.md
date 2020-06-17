@@ -61,9 +61,8 @@ The folder **templates** contains:
 
 
 ### Docker
-* Creation of Docker containers
 
-Two containers are built and run: a container for the Postgres DB and a container for the Flas app. They are subsequently linked together.
+Two containers are built and run: a container for the Postgres DB and a container for the Flask app. They are subsequently linked together (although this step is not necessary for the Kubernetes deployment).
 
 The Postgres container is built via the Dockerfile contained in the folder **psql**, executing the commands:
 
@@ -77,11 +76,13 @@ Run **main_updateDB.py** connecting to the container's address to populate the P
 
 The flask container is built via:
 
-_docker build -t <DOCKERHUB_FLASK_CONTAINER>  ._
+_docker build -f ./docker_files/Dockerfile -t <DOCKERHUB_FLASK_CONTAINER>  ./docker_files/_
 
 The containers are linked together:
 
 _docker run -it -p 5000:5000 --link <NAME> -e POSTGRES_PORT=<DOCKERHUB_POSTGRES_CONTAINER_PORT> -e POSTGRES_HOST=<NAME> -e POSTGRES_PASSWORD=<PWD> <DOCKERHUB_FLASK_CONTAINER>_
+  
+The 
   
 ### Kubernetes
 
