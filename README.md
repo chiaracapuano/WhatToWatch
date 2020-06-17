@@ -13,16 +13,33 @@ and **output** as produced by the app, when the topic is *scientists*:
 
 ![alt text](https://github.com/chiaracapuano/WhatToWatch/blob/master/png-example/output.png)
 
-The following sections discuss respectively the Python, Docker and Kubernetes codes:
+The following sections of the README discuss respectively the Python codebase, Docker and Kubernetes files:
 
 [Python-Code](#Python)
-[PDocker-Code](#Docker)
+
+[Docker-Code](#Docker)
+
 [Kubernetes-Code](#Kubernetes)
 
 ### Python
 Folders:
+* home folder
 * update-database
 * templates
+
+#### home folder
+
+**main.py** in the home folder contains the development of the Flask app. 
+
+The movies suggestions are evaluated in **Suggestions.py**, where the user input words are compared, one by one, with the indivdual tags contained in the table TAGS. The semantic similarity is calculated by SpaCy (0-1 scale), and a similarity index is provided for each one of the tags with respect to the user search term: by taking the cube of the similarity indexes, as well as multiplying the indexes < 0.5 by 0.1, the low similarity indexes are punished.
+
+Also, it is assumed that the first two search terms entered by the user are the most relevant for the comparison with the tags, therefore the similarity indexes calculatedfor the first search term are multiplied by 2, for the second term by 1.5. 
+
+The indexes obtained are averaged across the movie titles, and in output the top 5 suggestions are provided in json format, containing the movies title, Netflix link and Tomatometer rating.
+
+The library Jinja 2 is used to render the dataframe in output.
+
+#### update-database
 
 The folder **update-database** contains the **main_updateDB.py** program, that should be run for update/creation of DB purposes.
 
@@ -35,21 +52,12 @@ Also, this dataframe is pickled in Scraper.py: this move is necessary in that it
 * RATINGS: produced by **Rotten_Tomatoes.py**. This table is obtained scraping the Rotten Tomatoes website to obtain the Tomatometer rating of the movies scraped from Netflix. The movie titles are obtained from the table TITLES and modified to suit the Rotten Tomatoes movie web addresses. 
 * TITLES_AND_RATINGS: produced by Rotten_Tomatoes.py. This table contains the movies titles in displayed both in a user friendly manner (as per table TITLES) and Rotten Tomatoes website suitable, together with the Tomatometer rating.
 
+#### templates
+
 The folder **templates** contains:
 * **home.html**: file that renders the home page of the Flask app
 * **output.html**: file that renders the dataframe visualized in output as movie suggestions.
 
-
-
-**main.py** in the home folder contains the development of the Flask app. 
-
-The movies suggestions are evaluated in **Suggestions.py**, where the user input words are compared, one by one, with the indivdual tags contained in the table TAGS. The semantic similarity is calculated by SpaCy (0-1 scale), and a similarity index is provided for each one of the tags with respect to the user search term: by taking the cube of the similarity indexes, as well as multiplying the indexes < 0.5 by 0.1, the low similarity indexes are punished.
-
-Also, it is assumed that the first two search terms entered by the user are the most relevant for the comparison with the tags, therefore the similarity indexes calculatedfor the first search term are multiplied by 2, for the second term by 1.5. 
-
-The indexes obtained are averaged across the movie titles, and in output the top 5 suggestions are provided in json format, containing the movies title, Netflix link and Tomatometer rating.
-
-The library Jinja 2 is used to render the dataframe in output.
 
 
 ### Docker
