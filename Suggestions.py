@@ -61,11 +61,12 @@ class Suggestions:
         pd.set_option('display.width', 400)
         pd.set_option('display.max_colwidth', None)
         joined = pd.merge(df_titles_and_ratings, grouped, left_on='Code', right_on='Code')
+        joined = joined.drop_duplicates()
+
         top_suggestions = joined.sort_values('Scores_tot', ascending=False).head(5)
         top_suggestions.rename(columns={'Code': 'Link'}, inplace = True)
         top_suggestions.fillna(value='Tomatometer not available', inplace=True)
         top_suggestions["Rating"] = top_suggestions["Rating"].replace('null', 'Tomatometer not available')
-        top_suggestions = top_suggestions.drop_duplicates()
 
         env = Environment(loader=FileSystemLoader('./templates'))
 
