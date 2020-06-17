@@ -1,6 +1,8 @@
 # WhatToWatch
 This repo contains the development of a simple Flask app, that suggests Netflix movie titles based on user input.
 
+[here](#Python)
+
 The app pulls movie tags and titles from a Postgres DB, evaluates the semantic similarity between user input words and tags using Python SpaCy and displays the suggestions in a table that shows the top 5 movies identified and their Tomatometer rating. 
 
 The app is containerized in Docker and deployed to Kubernetes.
@@ -14,7 +16,7 @@ and **output** as produced by the app, when the topic is *scientists*:
 ![alt text](https://github.com/chiaracapuano/WhatToWatch/blob/master/png-example/output.png)
 
 
-***Python Part*** 
+### Python
 Folders:
 * update-database
 * templates
