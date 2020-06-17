@@ -8,6 +8,3 @@ db_files
 docker-entrypoint-initdb.d
 flask-aws
 
-/docker_files/docker-compose.yml
-/docker_files/main.py
-/docker_files/Suggestions.py
