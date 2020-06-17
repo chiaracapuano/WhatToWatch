@@ -63,8 +63,10 @@ The folder **templates** contains:
 ### Docker
 
 Two containers are built and run: 
-* Flask app container 
-* Postgres DB container -> *not needed for the Kubernetes deployment*, but for the containers linkage: the containers are linked together simply becuase I was curious to know if I could make it work.
+* Flask app container in the folder **docker_files**
+* Postgres DB container in the folder **psql** -> *not needed for the Kubernetes deployment*, but for the containers linkage: the containers are linked together simply becuase I was curious to know if I could make it work.
+
+The folder contains the main and the other pieces of code that make the app: this measure is necessary to reduce the size of the container.
 
 #### Postgres DB container 
 
@@ -94,6 +96,14 @@ The flask container is built via:
 docker build -f ./docker_files/Dockerfile -t <DOCKERHUB_FLASK_CONTAINER>  ./docker_files/
 ```
 
+Push the container to Dockerhub:
+
+```
+docker push <DOCKERHUB_FLASK_CONTAINER>
+```
+
+
+
 The containers are linked together:
 
 ```
@@ -104,9 +114,9 @@ The respective Dockerfile contains a list of libraries to be installed for the F
 
 ### Kubernetes
 
-Two pods are built and run: 
-* Postgres DB pod 
-* Flask app pod
+The folder **kubernetes_files** contains two subfolders, that contains the files to spin up two pods:
+* Postgres DB pod in the subfolder **infrastructure**
+* Flask app pod in the subfolder **app** 
 
 #### Postgres DB pod  
 
@@ -124,11 +134,11 @@ The DB is populated simply copying the local Postgres DB of interest in the Kube
 
 #### Flask app pod
 
-The files necessary to spin up the pod are based on the tutorial:
+The files necessary to spin up the pod in the subfolder **app** are based on the tutorial:
 
 https://www.conjur.org/blog/tutorial-spin-up-your-kubernetes-in-docker-cluster-and-they-will-come/
 
-and they rely on the Dockerhub image of the Flask app produced in the previous step (#Docker).
+and rely on the Dockerhub image of the Flask app produced in the previous step (#Docker).
 
 The pod is deployed via:
 
@@ -136,12 +146,11 @@ The pod is deployed via:
 kubectl apply -f ./kubernetes_files/app/ 
 ```
 
-and the app is run via:
+The app is run typing the ip address and port of the service in the browser: 0.0.0.0:KC_PORT. The service port (KC_PORT) is obtained through the command:
 
 ```
 kubectl get svc whattowatch
 ```
-Get the service port (KC_PORT) as displayed by the previous command and connect to: 0.0.0.0:KC_PORT.
 
 
 
