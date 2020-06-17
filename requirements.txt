@@ -1,9 +1,0 @@
-bs4
-flask
-joblib
-requests
-spacy
-wheel
-psycopg2-binary
-SQLAlchemy
-configparser

@@ -1,6 +1,6 @@
 FROM achiaracapuano/nlp-python-base:nlp-3.7.6-buster
 #FROM python:3.7.6-buster
-COPY . /app
+COPY .. /app
 WORKDIR /app
 RUN pip install --upgrade pip
 RUN pip install spacy

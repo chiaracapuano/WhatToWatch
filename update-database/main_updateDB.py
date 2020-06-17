@@ -10,6 +10,7 @@ pwd = configParser.get('dev-postgres-config', 'pwd')
 host = configParser.get('dev-postgres-config', 'host')
 port = configParser.get('dev-postgres-config', 'port')
 
+
 engine = create_engine('postgresql+psycopg2://'+user+':'+pwd+'@'+host+':'+port+'/whattowatch')
 
 

@@ -14,8 +14,9 @@ pwd = os.getenv('POSTGRES_PASS')
 host = os.getenv('POSTGRES_HOST')
 port = os.getenv('POSTGRES_PORT')
 
-print("Attempt to connect to PSQL at {}:{} as user '{}'".format(host, port, user))
 
+
+print("Attempt to connect to PSQL at {}:{} as user '{}'".format(host, port, user))
 app = Flask(__name__)
 engine = create_engine('postgresql+psycopg2://'+user+':'+pwd+'@'+host+':'+port+'/whattowatch')
 
