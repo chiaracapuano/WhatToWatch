@@ -21,7 +21,7 @@ The following sections of the README discuss respectively the Python codebase, D
 
 [3. Kubernetes-Files](#Kubernetes)
 
-### Python
+### 1. Python
 Folders:
 * home folder
 * update-database
@@ -60,7 +60,7 @@ The folder **templates** contains:
 
 
 
-### Docker
+### 2. Docker
 
 Two containers are built and run: 
 * Flask app container 
@@ -102,7 +102,7 @@ docker run -it -p 5000:5000 --link <NAME> -e POSTGRES_PORT=<DOCKERHUB_POSTGRES_C
   
 The respective Dockerfile contains a list of libraries to be installed for the Flask app to work in the container. Some of the libraries are included in the file **requirements.txt**.
 
-### Kubernetes
+### 3. Kubernetes
 
 Two pods are built and run: 
 * Postgres DB pod 
