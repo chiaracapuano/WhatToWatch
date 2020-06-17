@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whattowatch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: whattowatch
+  template:
+    metadata:
+      labels:
+        app: whattowatch
+    spec:
+      containers:
+        - name: whattowatch
+          image: achiaracapuano/whattowatch:dev
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: whattowatch-config
