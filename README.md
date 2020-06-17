@@ -13,13 +13,13 @@ and **output** as produced by the app, when the topic is *scientists*:
 
 ![alt text](https://github.com/chiaracapuano/WhatToWatch/blob/master/png-example/output.png)
 
-The following sections of the README discuss respectively the Python codebase, Docker and Kubernetes files:
+The following sections of the README discuss respectively the Python codebase, Docker and Kubernetes files and commands:
 
 [Python-Code](#Python)
 
-[Docker-Code](#Docker)
+[Docker-Files](#Docker)
 
-[Kubernetes-Code](#Kubernetes)
+[Kubernetes-Files](#Kubernetes)
 
 ### Python
 Folders:
