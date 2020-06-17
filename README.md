@@ -21,7 +21,7 @@ The following sections of the README discuss respectively the Python codebase, D
 
 [3. Kubernetes](#Kubernetes)
 
-### 1.Python-Code
+### Python
 Folders:
 * home folder
 * update-database
