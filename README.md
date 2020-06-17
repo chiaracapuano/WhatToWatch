@@ -4,9 +4,10 @@ This repo contains the development of a simple Flask app, that suggests Netflix 
 The app pulls data from a Postgres DB and suggests movie titles usign a pre-trained Natural Language Processing package offered by Python: SpaCy. The app is deployed in Docker.
 
 **Example of homepage and output**
-![alt text](http://url/to/img.png)
 
-![alt text](http://url/to/img.png)
+![alt text](https://github.com/chiaracapuano/WhatToWatch/blob/master/png-example/home-page.png)
+
+![alt text](https://github.com/chiaracapuano/WhatToWatch/blob/master/png-example/output.png)
 
 
 ***Python Part*** 
