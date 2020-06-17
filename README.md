@@ -84,7 +84,7 @@ https://docs.docker.com/engine/examples/postgresql_service/
 
 Run **main_updateDB.py** connecting to the container's address to populate the Postgres DB, or simply dump the local DB to the Docker DB using a dump.
 
-### Flask app container 
+#### Flask app container 
 
 The flask container is built via:
 
