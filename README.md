@@ -141,7 +141,7 @@ and the app is run via:
 ```
 kubectl get svc whattowatch
 ```
-
+Get the service port (<PORT>) as displayed by the previous command and connect to: 0.0.0.0:<PORT>.
 
 
 
