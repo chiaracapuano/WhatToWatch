@@ -15,11 +15,11 @@ and **output** as produced by the app, when the topic is *scientists*:
 
 The following sections of the README discuss respectively the Python codebase, Docker and Kubernetes files and commands:
 
-[Python-Code](#Python)
+[1. Python-Code](#Python)
 
-[Docker-Files](#Docker)
+[2. Docker-Files](#Docker)
 
-[Kubernetes-Files](#Kubernetes)
+[3. Kubernetes-Files](#Kubernetes)
 
 ### Python
 Folders:
@@ -62,40 +62,86 @@ The folder **templates** contains:
 
 ### Docker
 
-Two containers are built and run: a container for the 
-* Postgres DB container 
+Two containers are built and run: 
 * Flask app container 
-
-The containers are subsequently linked together (although this step is not necessary for the Kubernetes deployment).
+* Postgres DB container -> *not needed for the Kubernetes deployment*, but for the containers linkage: the containers are linked together simply becuase I was curious to know if I could make it work.
 
 #### Postgres DB container 
 
 The Postgres container is built via the Dockerfile contained in the folder **psql**, executing the commands:
 
-_docker build -f ./psql/Dockerfile -t <DOCKERHUB_POSTGRES_CONTAINER> ./psql/_
+```
+docker build -f ./psql/Dockerfile -t <DOCKERHUB_POSTGRES_CONTAINER> ./psql/
+```
 
 and 
 
-_docker run --rm -d  --name <NAME> -v ${HOME}/postgres-data/:/var/lib/postgresql/data  -p <POSTGRES_LOCAL_PORT>:<DOCKERHUB_POSTGRES_CONTAINER_PORT>  <DOCKERHUB_POSTGRES_CONTAINER>_
+```
+docker run --rm -d  --name <NAME> -v ${HOME}/postgres-data/:/var/lib/postgresql/data  -p <POSTGRES_LOCAL_PORT>:<DOCKERHUB_POSTGRES_CONTAINER_PORT>  <DOCKERHUB_POSTGRES_CONTAINER>
+```
   
 The respective Dockerfile can be found on the Docker official documentation at: 
 
 https://docs.docker.com/engine/examples/postgresql_service/
 
-Run **main_updateDB.py** connecting to the container's address to populate the Postgres DB, or simply dump the local DB to the Docker DB using a dump.
+Run **main_updateDB.py** connecting to the container's address to populate the Postgres DB, or simply dump the local DB to the Docker DB using a dump (I use DataGrip to do this).
 
 #### Flask app container 
 
 The flask container is built via:
 
-_docker build -f ./docker_files/Dockerfile -t <DOCKERHUB_FLASK_CONTAINER>  ./docker_files/_
+```
+docker build -f ./docker_files/Dockerfile -t <DOCKERHUB_FLASK_CONTAINER>  ./docker_files/
+```
 
 The containers are linked together:
 
-_docker run -it -p 5000:5000 --link <NAME> -e POSTGRES_PORT=<DOCKERHUB_POSTGRES_CONTAINER_PORT> -e POSTGRES_HOST=<NAME> -e POSTGRES_PASSWORD=<PWD> <DOCKERHUB_FLASK_CONTAINER>_
+```
+docker run -it -p 5000:5000 --link <NAME> -e POSTGRES_PORT=<DOCKERHUB_POSTGRES_CONTAINER_PORT> -e POSTGRES_HOST=<NAME> -e POSTGRES_PASSWORD=<PWD> <DOCKERHUB_FLASK_CONTAINER>
+```
   
-  
+The respective Dockerfile contains a list of libraries to be installed for the Flask app to work in the container. Some of the libraries are included in the file **requirements.txt**.
+
 ### Kubernetes
+
+Two pods are built and run: 
+* Postgres DB pod 
+* Flask app pod
+
+#### Postgres DB pod  
+
+The files necessary to create this pod are contained in the **infrastructure** subfolder. The files are produced based on the tutorial: 
+
+https://severalnines.com/database-blog/using-kubernetes-deploy-postgresql
+
+The command run to deploy the DB is: 
+
+```
+kf apply -f ./kubernetes_files/infrastructure/
+```
+
+The DB is populated simply copying the local Postgres DB of interest in the Kubernetes Postgres instance (I use DataGrip to do this).
+
+#### Flask app pod
+
+The files necessary to spin up the pod are based on the tutorial:
+
+https://www.conjur.org/blog/tutorial-spin-up-your-kubernetes-in-docker-cluster-and-they-will-come/
+
+and they rely on the Dockerhub image of the Flask app produced in the previous step (#Docker).
+
+The pod is deployed via:
+
+```
+kf apply -f ./kubernetes_files/app/ 
+```
+
+and the app is run via:
+
+```
+kc logs -f --tail=-1 -l app=whattowatch --all-containers=true  
+```
+
 
 
 
