@@ -2,18 +2,19 @@ from Suggestions import Suggestions
 import sys
 import pandas as pd
 import spacy
+import os
 from flask import Flask, request, Response, render_template
 import joblib
 from sqlalchemy import create_engine
 import configparser
 
-configParser = configparser.RawConfigParser()
-configFilePath = './login.config'
-configParser.read(configFilePath)
-user = configParser.get('dev-postgres-config', 'user')
-pwd = configParser.get('dev-postgres-config', 'pwd')
-host = configParser.get('dev-postgres-config', 'host')
-port = configParser.get('dev-postgres-config', 'port')
+
+user = os.getenv('POSTGRES_USER')
+pwd = os.getenv('POSTGRES_PASS')
+host = os.getenv('POSTGRES_HOST')
+port = os.getenv('POSTGRES_PORT')
+
+print("Attempt to connect to PSQL at {}:{} as user '{}'".format(host, port, user))
 
 app = Flask(__name__)
 engine = create_engine('postgresql+psycopg2://'+user+':'+pwd+'@'+host+':'+port+'/whattowatch')

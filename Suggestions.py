@@ -65,6 +65,7 @@ class Suggestions:
         top_suggestions.rename(columns={'Code': 'Link'}, inplace = True)
         top_suggestions.fillna(value='Tomatometer not available', inplace=True)
         top_suggestions["Rating"] = top_suggestions["Rating"].replace('null', 'Tomatometer not available')
+        top_suggestions = top_suggestions.drop_duplicates()
 
         env = Environment(loader=FileSystemLoader('./templates'))
 
