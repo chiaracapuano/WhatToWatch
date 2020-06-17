@@ -15,11 +15,11 @@ and **output** as produced by the app, when the topic is *scientists*:
 
 The following sections of the README discuss respectively the Python codebase, Docker and Kubernetes files and commands:
 
-[1. Python-Code](#Python)
+[1. Python-Code](#1. Python)
 
-[2. Docker-Files](#Docker)
+[2. Docker-Files](#2. Docker)
 
-[3. Kubernetes-Files](#Kubernetes)
+[3. Kubernetes-Files](#3. Kubernetes)
 
 ### 1. Python
 Folders:
