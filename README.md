@@ -15,13 +15,13 @@ and **output** as produced by the app, when the topic is *scientists*:
 
 The following sections of the README discuss respectively the Python codebase, Docker and Kubernetes files and commands:
 
-[1. Python-Code](#1. Python)
+[1. Python-Code](#1.Python)
 
-[2. Docker-Files](#2. Docker)
+[2. Docker-Files](#2.Docker)
 
-[3. Kubernetes-Files](#3. Kubernetes)
+[3. Kubernetes-Files](#3.Kubernetes)
 
-### 1. Python
+### 1.Python
 Folders:
 * home folder
 * update-database
@@ -60,7 +60,7 @@ The folder **templates** contains:
 
 
 
-### 2. Docker
+### 2.Docker
 
 Two containers are built and run: 
 * Flask app container 
@@ -102,7 +102,7 @@ docker run -it -p 5000:5000 --link <NAME> -e POSTGRES_PORT=<DOCKERHUB_POSTGRES_C
   
 The respective Dockerfile contains a list of libraries to be installed for the Flask app to work in the container. Some of the libraries are included in the file **requirements.txt**.
 
-### 3. Kubernetes
+### 3.Kubernetes
 
 Two pods are built and run: 
 * Postgres DB pod 
