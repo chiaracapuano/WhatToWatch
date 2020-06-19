@@ -64,8 +64,7 @@ The folder **templates** contains:
 
 Two containers are built and run: 
 * Flask app container in the folder **docker_files**
-* Postgres DB container in the folder **psql** -> *not needed for the Kubernetes deployment*, but for the containers linkage: the containers are linked together simply becuase I was curious to know if I could make it work.
-
+* Postgres DB container in the folder **psql** 
 The folder contains the main and the other pieces of code that make the app: this measure is necessary to reduce the size of the container.
 
 #### Postgres DB container 
@@ -81,7 +80,8 @@ and
 ```
 docker run --rm -d  --name <NAME> -v ${HOME}/postgres-data/:/var/lib/postgresql/data  -p <POSTGRES_LOCAL_PORT>:<DOCKERHUB_POSTGRES_CONTAINER_PORT>  <DOCKERHUB_POSTGRES_CONTAINER>
 ```
-  
+This is the database that Kubernetes will rely on.
+
 The respective Dockerfile can be found on the Docker official documentation at: 
 
 https://docs.docker.com/engine/examples/postgresql_service/
