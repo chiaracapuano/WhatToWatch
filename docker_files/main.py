@@ -3,10 +3,9 @@ import sys
 import pandas as pd
 import spacy
 import os
-from flask import Flask, request, Response, render_template
+from flask import Flask, request, render_template
 import joblib
 from sqlalchemy import create_engine
-import configparser
 
 
 user = os.getenv('POSTGRES_USER')

@@ -5,6 +5,10 @@ The app pulls movie tags and titles from a Postgres DB, evaluates the semantic s
 
 The app is containerized in Docker and deployed to Kubernetes.
 
+The app workflow can be illustrated the following:  
+
+![alt text](https://github.com/chiaracapuano/WhatToWatch/blob/master/png-example/Workflow.001.png)
+
 Here an **example of homepage**:
 
 ![alt text](https://github.com/chiaracapuano/WhatToWatch/blob/master/png-example/home-page.png)
