@@ -35,9 +35,9 @@ Folders:
 
 **main.py** in the home folder contains the development of the Flask app. 
 
-The movies suggestions are evaluated in **Suggestions.py**, where the user input words are compared, one by one, with the indivdual tags contained in the table TAGS. The semantic similarity is calculated by SpaCy (0-1 scale), and a similarity index is provided for each one of the tags with respect to the user search term: by taking the cube of the similarity indexes, as well as multiplying the indexes < 0.5 by 0.1, the low similarity indexes are punished.
+The movies suggestions are evaluated in **Suggestions.py**, where the user input words are compared, one by one, with the indivdual tags contained in the table TAGS. The semantic similarity is calculated by SpaCy (0-1 scale), and a similarity index is provided for each one of the tags with respect to the user search term: by taking the cube of the similarity indexes, the low similarity indexes are punished.
 
-Also, it is assumed that the first two search terms entered by the user are the most relevant for the comparison with the tags, therefore the similarity indexes calculatedfor the first search term are multiplied by 2, for the second term by 1.5. 
+Also, it is assumed that the first two search terms entered by the user are the most relevant for the comparison with the tags, therefore the similarity indexes calculated for the first search term are multiplied by 2, for the second term by 1.5. 
 
 The indexes obtained are averaged across the movie titles, and in output the top 5 suggestions are provided in json format, containing the movies title, Netflix link and Tomatometer rating.
 
@@ -68,7 +68,7 @@ The folder **templates** contains:
 
 Two containers are built and run: 
 * Flask app container in the folder **docker_files**
-* Postgres DB container in the folder **psql** 
+* Postgres DB container in the folder **psql** -> optional
 The folder contains the main and the other pieces of code that make the app: this measure is necessary to reduce the size of the container.
 
 #### Postgres DB container 
